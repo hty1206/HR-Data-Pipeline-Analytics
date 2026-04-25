@@ -1,6 +1,0 @@
-streamlit
-pandas
-sqlalchemy
-pymysql
-python-dotenv
-plotly
