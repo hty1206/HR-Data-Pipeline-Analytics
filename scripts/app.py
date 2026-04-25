@@ -29,14 +29,14 @@ def get_engine():
 
 engine = get_engine()
 
-@st.cache_data(ttl=600)
+@st.cache_data(ttl=300)
 def load_data(table_name):
     query = f"SELECT * FROM {table_name}"
     return pd.read_sql(query, engine)
 
 st.title("📊 Strategic HR Analytics Dashboard")
 st.caption("Data Source：https://www.kaggle.com/datasets/rhuebner/human-resources-data-set")
-st.caption("更新頻率：每 10 分鐘")
+st.caption("更新頻率：每 5 分鐘")
 
 try:
     df_silver = load_data("hr_employees_silver")
@@ -400,7 +400,7 @@ with tab4:
             return color
 
         st.dataframe(
-            df_filtered.style.applymap(highlight_risk, subset=['Pay_Equity_Status'])
+            df_filtered.style.map(highlight_risk, subset=['Pay_Equity_Status'])
             .format({'Salary': '${:,.0f}', 'Avg_Salary_For_Position': '${:,.0f}'}),
             use_container_width=True,
             height=500
