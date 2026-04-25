@@ -1,0 +1,42 @@
+USE hr_project;
+
+DROP TABLE IF EXISTS hr_raw_data;
+CREATE TABLE hr_raw_data (
+    -- 所有欄位統一使用 VARCHAR，確保匯入不報錯
+    Employee_Name VARCHAR(255),
+    EmpID VARCHAR(50), 
+    MarriedID VARCHAR(50),
+    MaritalStatusID VARCHAR(50),
+    GenderID VARCHAR(50),
+    EmpStatusID VARCHAR(50),
+    DeptID VARCHAR(50),
+    PerfScoreID VARCHAR(50),
+    FromDiversityJobFairID VARCHAR(50),
+    Salary VARCHAR(100),
+    Termd VARCHAR(50),
+    PositionID VARCHAR(50),
+    Position VARCHAR(255),
+    State VARCHAR(50),
+    Zip VARCHAR(50),
+    DOB VARCHAR(100),
+    Sex VARCHAR(50),
+    MaritalDesc VARCHAR(100),
+    CitizenDesc VARCHAR(100),
+    HispanicLatino VARCHAR(50),
+    RaceDesc VARCHAR(100),
+    DateofHire VARCHAR(100),
+    DateofTermination VARCHAR(255),
+    TermReason VARCHAR(255),
+    EmploymentStatus VARCHAR(255),
+    Department VARCHAR(255),
+    ManagerName VARCHAR(255),
+    ManagerID VARCHAR(50),
+    RecruitmentSource VARCHAR(255),
+    PerformanceScore VARCHAR(255),
+    EngagementSurvey VARCHAR(50),
+    EmpSatisfaction VARCHAR(50),
+    SpecialProjectsCount VARCHAR(50),
+    LastPerformanceReview_Date VARCHAR(100),
+    DaysLateLast30 VARCHAR(50),
+    Absences VARCHAR(50)
+);
