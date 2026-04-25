@@ -13,12 +13,18 @@ st.set_page_config(page_title="Strategic HR Dashboard", layout="wide")
 @st.cache_resource
 
 def get_engine():
-    user = os.getenv("DB_USER")
-    pw = os.getenv("DB_PASSWORD")
-    host = os.getenv("DB_HOST")
-    db = os.getenv("DB_NAME")
+    def get_val(key):
+        if key in st.secrets:
+            return st.secrets[key]
+        return os.getenv(key)
+
+    user = get_val("DB_USER")
+    pw = get_val("DB_PASSWORD")
+    host = get_val("DB_HOST")
+    db = get_val("DB_NAME")
+    port = get_val("DB_PORT")
     
-    conn_str = f"mysql+pymysql://{user}:{pw}@{host}:4000/{db}?ssl_verify_cert=false&ssl_verify_identity=false"
+    conn_str = f"mysql+pymysql://{user}:{pw}@{host}:{port}/{db}?ssl_verify_cert=false&ssl_verify_identity=false"
     return create_engine(conn_str, pool_pre_ping=True)
 
 engine = get_engine()
