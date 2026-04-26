@@ -1,198 +1,169 @@
-# 📊 HR Data Pipeline & Analytics Dashboard
+# 📊 Strategic HR Data Pipeline & Analytics Platform
 
-## 🔗 Live Demo
+## 🔗 Live Dashboard
 👉 https://hty-hr-data-pipeline-analytics.streamlit.app/
+## 🔗 Data Source
+👉 https://www.kaggle.com/datasets/rhuebner/human-resources-data-set
 
 ---
 
-## 📌 Project Overview
+## 🚀 Project Overview
 
-This project simulates a **real-world HR data pipeline** from raw data ingestion to a fully automated analytics dashboard.
+This project demonstrates a **production-style HR data pipeline**, simulating how real companies process, transform, and analyze employee data.
 
-It demonstrates how to build an end-to-end **ELT pipeline** using:
+It implements a full **ELT (Extract–Load–Transform)** workflow with:
 
-- Cloud Database (TiDB)
-- SQL-based data transformation (Bronze / Silver / Gold)
-- Python for ingestion & orchestration
-- Streamlit for interactive dashboard
-- GitHub Actions for automation
+- Cloud Data Warehouse (TiDB)
+- SQL-based transformations (Medallion Architecture)
+- Automated pipelines (GitHub Actions)
+- Real-time analytics dashboard (Streamlit)
 
 ---
 
-## 🏗️ Architecture
+## 🧠 Key Engineering Concepts
 
-```
+### ✔ Medallion Architecture (Why it matters)
 
-Raw Data (CSV)
-↓
-Python Ingestion
-↓
-Bronze Layer (Raw Table)
-↓
-Silver Layer (Data Cleaning & Feature Engineering)
-↓
-Gold Layer (Business Metrics & Aggregations)
-↓
-Streamlit Dashboard
-↓
-GitHub Actions (Auto Refresh)
+| Layer | Purpose |
+|------|--------|
+| Bronze | Preserve raw data (no data loss) |
+| Silver | Clean & standardize data |
+| Gold | Serve business-ready analytics |
 
+👉 This design ensures:
+- Data traceability
+- Reproducibility
+- Scalable analytics
+
+---
+
+## 🔄 Data Flow (End-to-End)
+
+```text
+CSV Dataset
+   ↓
+Python Ingestion (SQLAlchemy)
+   ↓
+TiDB Cloud (Bronze Table)
+   ↓
+SQL Transformations (Silver → Gold)
+   ↓
+Streamlit Dashboard (Real-time Query)
+   ↓
+GitHub Actions (Daily Automation)
 ````
 
 ---
 
-## 🧱 Data Layers
+## ⚙️ Pipeline Details
 
-### 🥉 Bronze Layer
-- Table: `hr_raw_data`
-- Raw HR dataset
-- All fields stored as VARCHAR for ingestion stability
+### 1️⃣ Data Ingestion
 
----
+📄 `ingest_tidb.py` 
 
-### 🥈 Silver Layer
-- Table: `hr_employees_silver`
-- Data type conversion
-- Feature engineering:
-  - Tenure calculation
-  - Salary normalization
-  - Attrition flag
+* Loads CSV into TiDB
+* Uses SQLAlchemy
+* Handles special characters in credentials
+
+⚠️ Design Choice:
+
+* Raw table uses `VARCHAR` for flexibility
+* Prevents schema mismatch during ingestion
 
 ---
 
-### 🥇 Gold Layer (Business Views)
+### 2️⃣ Data Transformation
 
-| View | Description |
-|------|------------|
-| `gold_company_summary` | Company-level KPIs |
-| `gold_dept_performance` | Department performance |
-| `gold_attrition_detailed` | Attrition analysis |
-| `gold_recruitment_quality` | Hiring channel evaluation |
-| `gold_pay_equity_analysis` | Salary fairness analysis |
+📄 `run_sql_pipeline.py` 
 
----
+* Executes SQL scripts sequentially
+* Implements ELT approach
 
-## ⚙️ Data Pipeline
+Transformations include:
 
-### 1. Data Ingestion
-
-Python script uploads raw CSV into TiDB:
-
-📄 `ingest_tidb.py`
-
-- Uses SQLAlchemy
-- Connects to TiDB Cloud
-- Writes to `hr_raw_data`
-
-```python
-df.to_sql('hr_raw_data', if_exists='append')
-````
+* Data type casting
+* Tenure calculation
+* Salary normalization
+* Attrition flag creation
 
 ---
 
-### 2. Data Transformation (ELT)
-
-📄 `run_sql_pipeline.py`
-
-Executes SQL scripts:
-
-* Silver transformation
-* Gold aggregations
-
-```python
-conn.execute(text(cmd))
-```
-
----
-
-### 3. Automation (RPA)
+### 3️⃣ Automation (CI/CD)
 
 📄 `.github/workflows/pipeline.yml`
 
-* Runs pipeline daily
-* Automates:
+* Runs daily (cron job)
+* Executes SQL pipeline automatically
 
-  * Data ingestion
-  * SQL transformation
-  * Dashboard update
+👉 Result:
+
+* Dashboard always reflects latest data
+* No manual intervention needed
 
 ---
 
 ## 📊 Dashboard Features
 
-📄 `app.py`
+📄 `app.py` 
 
-Built with Streamlit + Plotly
+### 🏠 Company Overview
 
-### 🔹 Key Insights
+* Headcount tracking
+* Salary & tenure insights
 
-#### 🏠 Company Overview
+### 📉 Attrition Analysis
 
-* Total employees
-* Active employees
-* Avg salary & tenure
+* Root cause breakdown
+* High-risk tenure periods
 
-#### 📉 Attrition Analysis
+### 🔍 Recruitment Analytics
 
-* Why employees leave
-* Attrition peak by tenure
+* Channel performance comparison
+* Retention & satisfaction metrics
 
-#### 🔍 Recruitment Analysis
+### 💰 Pay Equity Analysis
 
-* Hiring channel performance
-* Retention & satisfaction
+* Detects:
 
-#### 💰 Pay Equity
-
-* Salary fairness classification
-* High-risk employee detection
+  * Underpaid Veterans (High Risk)
+  * Rising Stars
+  * Overpaid Newcomers
 
 ---
 
-## 🧪 Testing
+## 🧪 Real-World Engineering Challenges Solved
 
-📄 `testing_insert_update.sql`
-
-Simulates:
-
-* Insert new employees
-* Update HR records
+✔ Dirty data handling (dates, salary formats)
+✔ Schema flexibility (VARCHAR → typed transformation)
+✔ Automated pipeline execution
+✔ Separation of storage vs analytics layers
+✔ Real-time dashboard integration
 
 ---
 
 ## 📦 Tech Stack
 
-| Layer           | Tools             |
+| Category        | Tools             |
 | --------------- | ----------------- |
-| Data Storage    | TiDB Cloud        |
+| Database        | TiDB Cloud        |
 | Data Processing | SQL               |
 | Backend         | Python            |
 | Visualization   | Streamlit, Plotly |
-| Orchestration   | GitHub Actions    |
+| Automation      | GitHub Actions    |
 
 ---
 
 ## 🚀 Deployment
 
-* Dashboard: Streamlit Cloud
-* Database: TiDB Cloud
-* CI/CD: GitHub Actions
+* **Database**: TiDB Cloud
+* **Dashboard**: Streamlit Cloud
+* **Automation**: GitHub Actions
 
 ---
 
-## 📈 Key Highlights
+## 📈 Future Improvements
 
-✔ End-to-end ELT pipeline
-✔ Real-time dashboard
-✔ Cloud-native architecture
-✔ Automated data refresh
-✔ Business-driven analytics
-
----
-
-## 🧠 Future Improvements
-
-* Incremental data ingestion
-* Data validation checks
+* Incremental data loading (CDC)
+* Data validation (Great Expectations)
 * Airflow orchestration
-* User authentication for dashboard
+* Machine learning (attrition prediction)
