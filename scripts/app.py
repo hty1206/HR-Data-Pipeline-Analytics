@@ -36,7 +36,7 @@ def load_data(table_name):
 
 st.title("📊 Strategic HR Analytics Dashboard")
 st.caption("Data Source：https://www.kaggle.com/datasets/rhuebner/human-resources-data-set")
-st.caption("更新頻率：每 5 分鐘")
+st.caption("更新頻率：資料庫每日凌晨 2 點更新；網頁每 5 分鐘自動讀取最新數據")
 
 try:
     df_silver = load_data("hr_employees_silver")
