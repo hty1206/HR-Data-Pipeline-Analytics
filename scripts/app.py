@@ -262,7 +262,7 @@ with tab3:
 
         metric_type = st.radio(
             "分析維度選擇：", 
-            ["成本與穩定度 (年資/留任率)", "品質與滿意度 (績效/分數)"], 
+            ["成本與穩定度 (薪資/年資)", "品質與滿意度 (績效/分數)"], 
             horizontal=True
         )
 
@@ -284,6 +284,8 @@ with tab3:
                 y=df_recru['Avg_Tenure_Years'],
                 name='平均年資 (年)',
                 mode='lines+markers+text',
+                text=df_recru['Avg_Tenure_Years'],
+                textposition="top center",
                 line=dict(color='#EF553B', width=3),
                 yaxis='y2'
             ))
