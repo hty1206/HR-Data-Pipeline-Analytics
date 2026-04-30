@@ -262,7 +262,7 @@ with tab3:
 
         metric_type = st.radio(
             "分析維度選擇：", 
-            ["成本與穩定度 (薪資/年資)", "品質與滿意度 (績效/分數)"], 
+            ["成本與穩定度 (年資/留任度)", "品質與滿意度 (績效/分數)"], 
             horizontal=True
         )
 
@@ -277,15 +277,13 @@ with tab3:
             yaxis='y1'
         ))
 
-        if metric_type == "成本與穩定度 (薪資/年資)":
+        if metric_type == "成本與穩定度 (年資/留任度)":
             # 平均年資 (折線圖 - 右軸)
             fig_rec_combo.add_trace(go.Scatter(
                 x=df_recru['RecruitmentSource'],
                 y=df_recru['Avg_Tenure_Years'],
                 name='平均年資 (年)',
                 mode='lines+markers+text',
-                text=df_recru['Avg_Tenure_Years'],
-                textposition="top center",
                 line=dict(color='#EF553B', width=3),
                 yaxis='y2'
             ))
